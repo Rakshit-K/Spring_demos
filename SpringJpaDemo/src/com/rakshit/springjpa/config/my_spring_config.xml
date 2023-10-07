@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        
+        <!-- object by component scan -->
+        <context:component-scan base-package="com.rakshit.springjpa"/>
+
+
+	<!-- database connection -->
+	<bean id="dataSourceBean" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property> 
+		<property name="url" value="jdbc:mysql://localhost:3306/jdbcdemos"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="root"></property>
+	</bean>
+	
+	<bean id="hbAdapterBean" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="showSql" value="false"></property> 
+		<property name="generateDdl" value="true"></property>
+		<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"></property>
+	</bean>
+	
+	<bean id="emfBean" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSourceBean"></property> 
+		<property name="jpaVendorAdapter" ref="hbAdapterBean"></property>
+		<property name="packagesToScan" value="com.rakshit.springjpa"></property>
+	</bean>
+	
+
+</beans>
